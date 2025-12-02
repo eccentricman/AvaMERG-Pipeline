@@ -6,9 +6,7 @@ from header import *
 import torch.nn.functional as F
 from .ImageBind import *
 from .ImageBind import data
-from .common.modeling_llama import LlamaForCausalLM
-from transformers import StoppingCriteria, StoppingCriteriaList
-from .common.utils import *
+from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria, StoppingCriteriaList
 # from speech_generator.generate_audio import StyleTTS2
 # from talking_face_generator.generate_video import generate_video
 
@@ -71,7 +69,7 @@ class MERGModel(nn.Module):
                                              self.args['vicuna_version'])
         print(f'Initializing language decoder from {self.vicuna_ckpt_path} ...')
 
-        self.llama_model = LlamaForCausalLM.from_pretrained(self.vicuna_ckpt_path)
+        self.llama_model = AutoModelForCausalLM.from_pretrained(self.vicuna_ckpt_path)
         
         #add the lora module
         peft_config = LoraConfig(
@@ -97,7 +95,7 @@ class MERGModel(nn.Module):
         # use the new trained tokenizer
         tokenizer_path = self.vicuna_ckpt_path
         print(f'Initializing tokenizer from {tokenizer_path} ...')
-        self.llama_tokenizer = LlamaTokenizer.from_pretrained(tokenizer_path, use_fast=False)
+        self.llama_tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, use_fast=False)
         self.llama_tokenizer.pad_token = self.llama_tokenizer.eos_token
         self.llama_tokenizer.padding_side = "right"
 
