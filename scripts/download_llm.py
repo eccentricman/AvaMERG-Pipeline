@@ -21,8 +21,8 @@ def download_llm_model(repo_id: str, target_dir: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download an LLM model from Hugging Face Hub.")
-    parser.add_argument("--repo-id", type=str, required=True, help="The model ID on Hugging Face Hub.")
-    parser.add_argument("--target-dir", type=str, required=True, help="The local directory to save the model files.")
+    parser.add_argument("--repo-id", type=str, default="mistralai/Mistral-7B-v0.1", help="The model ID on Hugging Face Hub.")
+    parser.add_argument("--target-dir", type=str, default="ckpt/pretrained_ckpt/llm_ckpt/Mistral-7B-v0.1", help="The local directory to save the model files.")
     args = parser.parse_args()
 
     download_llm_model(args.repo_id, args.target_dir)

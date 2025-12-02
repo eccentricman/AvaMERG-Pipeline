@@ -9,7 +9,7 @@ max_length: 2048
 max_response_length: 512
 logging_step: 50
 
-vicuna_version: 7b_v0 
+llm_model_name: Mistral-7B-v0.1 
 pretrained_ckpt_path: ckpt/pretrained_ckpt/
 data_path: merg_data
 freeze_lm: false

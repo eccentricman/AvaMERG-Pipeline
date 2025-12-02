@@ -65,11 +65,11 @@ class MERGModel(nn.Module):
         print('Visual encoder initialized.')
 
     def _init_language_model(self):
-        self.vicuna_ckpt_path = os.path.join(self.args['pretrained_ckpt_path'], 'vicuna_ckpt',
-                                             self.args['vicuna_version'])
-        print(f'Initializing language decoder from {self.vicuna_ckpt_path} ...')
+        self.llm_ckpt_path = os.path.join(self.args['pretrained_ckpt_path'], 'llm_ckpt',
+                                             self.args['llm_model_name'])
+        print(f'Initializing language decoder from {self.llm_ckpt_path} ...')
 
-        self.llama_model = AutoModelForCausalLM.from_pretrained(self.vicuna_ckpt_path)
+        self.llama_model = AutoModelForCausalLM.from_pretrained(self.llm_ckpt_path)
         
         #add the lora module
         peft_config = LoraConfig(
@@ -93,7 +93,7 @@ class MERGModel(nn.Module):
             print('Language decoder initialized.')
 
         # use the new trained tokenizer
-        tokenizer_path = self.vicuna_ckpt_path
+        tokenizer_path = self.llm_ckpt_path
         print(f'Initializing tokenizer from {tokenizer_path} ...')
         self.llama_tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, use_fast=False)
         self.llama_tokenizer.pad_token = self.llama_tokenizer.eos_token
